@@ -1,11 +1,7 @@
 language: d  
 
-install:
-  - wget -q -O - "http://bit.ly/Doveralls" | bash
-
 script:
+  - dub fetch doveralls
   - dub build
   - dub test -b unittest-cov
-  - ./doveralls
-  # - dub fetch doveralls
-  # - dub run doveralls
+  - dub run doveralls
