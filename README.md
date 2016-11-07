@@ -1,0 +1,3 @@
+# blogd-spaces [![Build Status](https://travis-ci.org/Amaranthos/blogd-spaces.svg?branch=master)](https://travis-ci.org/Amaranthos/blogd-spaces) [![Coverage Status](https://coveralls.io/repos/github/Amaranthos/blogd-spaces/badge.svg?branch=master)](https://coveralls.io/github/Amaranthos/blogd-spaces?branch=master)
+
+blogd-spaces is a [vibe.d](http://vibed.org/) web app aimed at the tech community to document short, succinct ideas. The purpose of blogd-spaces is to encourage the spread of information and learning
