@@ -1,0 +1,5 @@
+html
+head
+	title blogd
+body
+	p hello
