@@ -1,14 +1,14 @@
 {
 	"authors": [
-		"joshu"
+		"Joshua Hodkinson"
 	],
 	"description": "A simple vibe.d server application.",
 	"name": "blogd-spaces",
 	"dependencies": {
 		"vibe-d": "~>0.7.26"
 	},
-	"license": "proprietary",
-	"copyright": "Copyright © 2016, joshu",
+	"license": "MIT",
+	"copyright": "Copyright © 2016, Joshua Hodkinson",
 	"versions": [
 		"VibeDefaultMain"
 	]
