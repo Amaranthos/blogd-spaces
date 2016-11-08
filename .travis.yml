@@ -3,5 +3,6 @@ language: d
 script:
   # - dub fetch doveralls
   - dub build
-  - dub test -b unittest-cov --nodeps
+  - dub test --coverage --combined
+  # - dub test -b unittest-cov --nodeps
   # - dub run doveralls
