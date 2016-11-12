@@ -2,5 +2,13 @@ doctype html
 html
 head
 	title blogd
+	link(rel='stylesheet', type='text/css', href='static/main.css')
 body
-	p hello
+	form#login(method="post", action='/login')
+		fieldset 
+			legend Login
+			- if(_error)
+				p(style='color:red') =_error
+			input(type="email", placeholder="email", name="email", required)
+			input(type="password", placeholder="password", name="password", required)
+			button(type="submit") Login

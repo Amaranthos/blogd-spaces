@@ -1,6 +1,6 @@
 module blogd.userdata;
 
-class UserData {
+struct UserData {
 	bool loggedIn;
-	//string name;
+	string name;
 }

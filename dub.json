@@ -5,7 +5,8 @@
 	"description": "A simple vibe.d server application.",
 	"name": "blogd-spaces",
 	"dependencies": {
-		"vibe-d": "~>0.7.26"
+		"vibe-d": "~>0.7.26",
+		"mysql-native": "~>0.1.6"
 	},
 	"license": "MIT",
 	"copyright": "Copyright © 2016, Joshua Hodkinson",

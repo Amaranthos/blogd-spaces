@@ -14,8 +14,9 @@ shared static this() {
 	filesServerSettings.options = HTTPFileServerOption.failIfNotFound;
 
 	auto router = new URLRouter;
-	router.registerWebInterface(new WebApp);
 	router.get("/static/*", serveStaticFiles("public/", filesServerSettings));
+	router.get("/favicon.ico", serveStaticFiles("public/", faviconSettings));
+	router.registerWebInterface(new WebApp);
 
 	auto settings = new HTTPServerSettings;
 	settings.sessionStore = new MemorySessionStore;
