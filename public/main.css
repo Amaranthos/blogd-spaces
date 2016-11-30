@@ -1,17 +1,12 @@
-#login {
+form {
 	display: flex;
 	justify-content: center;
 	text-align: center;
 }
 
-#login input {
+fieldset input {
 	width: 100%;
 	margin-bottom: 10px;
 	padding: 5px;
 	box-sizing: border-box;
-}
-
-#login button {
-	width: 100%;
-	padding: 5px;
 }

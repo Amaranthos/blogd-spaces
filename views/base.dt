@@ -1,0 +1,14 @@
+doctype html
+html
+	head
+		title blogd - #{title}
+		block styles
+			link(rel='stylesheet', type='text/css', href='static/main.css')
+
+		block scripts
+	body
+		include nav.dt
+
+		block content
+
+		include footer.dt
