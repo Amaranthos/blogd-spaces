@@ -1,7 +1,8 @@
 language: d  
 
 script:
-  # - dub fetch doveralls
+  - dub fetch doveralls
   - dub build
-  # - dub test -b unittest-cov
-  # - dub run doveralls
+  - dub test --coverage --combined
+  # - dub test -b unittest-cov --nodeps 
+  - dub run doveralls
