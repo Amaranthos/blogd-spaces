@@ -1,9 +1,9 @@
 doctype html
 html
 	head
-		title blogd - #{title}
+		title blogd - #{display.pageTitle}
 		block styles
-			link(rel='stylesheet', type='text/css', href='static/main.css')
+			link(rel='stylesheet', type='text/css', href='/static/main.css')
 
 		block scripts
 	body

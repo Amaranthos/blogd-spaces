@@ -1,5 +1,6 @@
 extends base.dt
 
 block content
-	p Hello worlds #{title}
-	p= title
+	p Hello #{display.user.name}
+	
+	

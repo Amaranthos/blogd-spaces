@@ -1,6 +1,5 @@
 extends base.dt
 
 block content
-	p Hello worlds #{title}
-	p= users
-	p= title
+	p Test
+		
