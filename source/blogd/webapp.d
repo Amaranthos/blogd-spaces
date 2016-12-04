@@ -13,23 +13,20 @@ final class WebApp {
 		mongo = connectMongoDB("127.0.0.1", 27017);
 	}
 
-	@method(HTTPMethod.GET)
 	void index() {
 		// Display home
 		DisplayData display = {"home", _authdUser};
 		render!("index.dt", display);
 	}
 
-	@method(HTTPMethod.GET)
-	void login(string _error = null) {
+	void getLogin(string _error = null) {
 		// Display form
 		DisplayData display = {"login", _authdUser};
 		render!("login.dt", display, _error);
 	}
 
-	@method(HTTPMethod.POST)
-	@errorDisplay!login
-	void login(string email, string password) {
+	@errorDisplay!getLogin
+	void postLogin(string email, string password) {
 		// Check account
 		auto account = mongo.getDatabase("blogd")["blogd.users"].findOne(["email": email, "password": password]);
 		enforce(account != Bson(null), "Incorrect email/password");
@@ -37,28 +34,26 @@ final class WebApp {
 		// Add logged in user to session
 		UserData user;
 		user.loggedIn = true;
-		user.name = "Josh";
+		user.name = "Josh"; // TODO: Populate with user's login
 		this._authdUser = user;
 
 		// Go home
-		redirect("./");
+		redirect("/");
 	}
 
-	@method(HTTPMethod.GET)
-	void logout() {
+	void getLogout() {
 		// Terminate session
 		_authdUser = UserData.init;
 		terminateSession();
 		// Go home
-		redirect("./");
+		redirect("/");
 	}
 
-	@method(HTTPMethod.GET)
 	@path("/user/create")
-	void userCreate(string _error = null) {
+	void getUserCreate(string _error = null) {
 		// Send logged in user home
 		if(_authdUser.loggedIn) {
-			redirect("./");
+			redirect("/");
 		}
 
 		// Display form
@@ -66,25 +61,26 @@ final class WebApp {
 		render!("user_create.dt", display, _error);
 	}
 
-	@method(HTTPMethod.POST)
-	@errorDisplay!userCreate
-	void userCreate(string email, string password, string name) {
+	@path("/user/create")
+	@errorDisplay!getUserCreate
+	void postUserCreate(string email, string password, string name) {
 		// Send logged in user home
 		if(_authdUser.loggedIn) {
-			redirect("./");
+			redirect("/");
 		}
 
 		// Check new user doesn't exist
+		auto account = mongo.getDatabase("blogd")["blogd.users"].findOne(["email": email, "password": password]);
+		enforce(account == Bson(null), "Account already exists");
 
 		// Create new user
 
 		// Go home
-		redirect("./");
+		redirect("/");
 	}
 
-	@method(HTTPMethod.GET)
 	@auth
-	void test(string _user, string _error = null) {
+	void getTest(string _user, string _error = null) {
 		DisplayData display = {"test", _authdUser};
 		render!("test.dt", display, _error);
 	}

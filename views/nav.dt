@@ -1,9 +1,12 @@
 nav
 	ul
 		li
-			a(href="./") blogd
+			a(href="/") blogd
 		li
 			-if (req.session && display.user.loggedIn)
-				a(href="./logout") logout
+				a(href="/logout") logout
 			-else
-				a(href="./login") login
+				a(href="/login") login
+		-if (!req.session || !display.user.loggedIn)
+			li
+				a(href="/user/create") Create Account

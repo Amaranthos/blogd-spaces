@@ -4,16 +4,24 @@ form {
 	text-align: center;
 }
 
+form fieldset {
+	display: flex;
+	padding: 1.5em;
+}
+
 form input {
 	width: 100%;
-	margin-bottom: 10px;
-	padding: 5px;
+	margin: 0.75em 0;
+	padding: 0.75em 6em;
 	box-sizing: border-box;
 }
 
-form button {
-	width: 100%;
-	margin-bottom: 10px;
-	padding: 5px;
-	box-sizing: border-box;	
+form input.last {
+	margin: 0;
+	margin-top: 0.75em;
+}
+
+form input.first {
+	margin: 0;
+	margin-bottom: 0.75em;
 }

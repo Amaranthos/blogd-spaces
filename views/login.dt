@@ -9,5 +9,4 @@ block content
 			input(type="email", placeholder="email", name="email", required)
 			input(type="password", placeholder="password", name="password", required)
 			input(type="submit", value="Login")
-			button
-				a(href="/user/create") Create Account
+				
