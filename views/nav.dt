@@ -1,14 +1,20 @@
 nav
 	ul
-		li
-			a(href="/") blogd
-		li
-			-if (req.session && display.user.loggedIn)
-				a(href="/logout") logout
-			-else
-				a(href="/login") login
-		-if (!req.session || !display.user.loggedIn)
-			li
-				a(href="/user/create") Create Account
 		li.icon
 			a(href="javascript:void(0);", onclick="expandNav()") &#9776;
+		li
+			a(href="/") blogd
+		-if (req.session && display.user.loggedIn)
+			li
+				a(href="/posts/read") read
+			li
+				a(href="/posts/write") write
+			li
+				a(href="/user/details") account
+			li
+				a(href="/logout") logout
+		-else
+			li
+				a(href="/login") login
+			li
+				a(href="/user/create") create account

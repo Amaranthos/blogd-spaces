@@ -99,20 +99,20 @@ nav
 				display: none
 				
 			@media only screen and (max-device-width: 680px), (max-width: 680px)
-				&:not(:first-child)
+				&//:not(:first-child)
 					display: none
 					
 				&.icon
-					float: right
+					float: left
 					display: inline-block
 					
 				^[1].responsive-nav
 					position: relative
 					
-				^[1].responsive-nav ^[2..-1].icon
-					position: absolute
-					right: 0
-					top: 0
+				// ^[1].responsive-nav ^[2..-1].icon
+				// 	position: absolute
+				// 	left: 0
+				// 	top: 0
 				
 				^[1].responsive-nav ^[2..-1]
 					float: none
