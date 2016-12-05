@@ -11,5 +11,8 @@
 	"copyright": "Copyright © 2016, Joshua Hodkinson",
 	"versions": [
 		"VibeDefaultMain"
+	],
+	"preBuildCommands": [
+		"stylus public/main.styl -o public/main.css"
 	]
 }
