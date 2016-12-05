@@ -12,7 +12,7 @@
 	"versions": [
 		"VibeDefaultMain"
 	],
-	"preBuildCommands": [
-		"stylus public/main.styl -o public/main.css"
+	"preGenerateCommands": [
+		"stylus public"
 	]
 }

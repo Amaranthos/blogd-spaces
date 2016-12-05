@@ -3,9 +3,11 @@ html
 	head
 		title blogd - #{display.pageTitle}
 		block styles
+			link(href="https://fonts.googleapis.com/css?family=Noto+Sans", rel="stylesheet")
 			link(rel='stylesheet', type='text/css', href='/static/main.css')
 
 		block scripts
+			script(src="/static/main.js")
 	body
 		include nav.dt
 

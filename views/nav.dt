@@ -10,3 +10,5 @@ nav
 		-if (!req.session || !display.user.loggedIn)
 			li
 				a(href="/user/create") Create Account
+		li.icon
+			a(href="javascript:void(0);", onclick="expandNav()") &#9776;

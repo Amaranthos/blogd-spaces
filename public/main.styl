@@ -1,27 +1,134 @@
-form {
-	display: flex;
-	justify-content: center;
-	text-align: center;
-}
+// Sizes
+$radius = 6px
 
-form fieldset {
-	display: flex;
-	padding: 1.5em;
-}
+// Other colours
+$white = #FFFFFF
+$black = #000000
 
-form input {
-	width: 100%;
-	margin: 0.75em 0;
-	padding: 0.75em 6em;
-	box-sizing: border-box;
-}
+// Primary colours
+$primary100 = #D1C4E9
+$primary500 = #673AB7
+$primary700 = #512DA8
 
-form input.last {
-	margin: 0;
-	margin-top: 0.75em;
-}
+// Accent xolours
+$accent100 = #FFFF8D
+$accent200 = #FFFF00
+$accent400 = #FFEA00
 
-form input.first {
-	margin: 0;
-	margin-bottom: 0.75em;
-}
+// Text colours
+$primaryTextB = alpha($black, 0.87)
+$secondaryTextB = alpha($black, 0.54)
+$hintTextB = alpha($black, 0.38)
+
+$primaryTextW = alpha($white, 0.87)
+$secondaryTextW = alpha($white, 0.54)
+$hintTextW = alpha($white, 0.38)
+
+// Vendor mixins
+vendors = webkit moz o ms
+
+appearance()
+	for vendor in vendors
+		-{vendor}-appearance: arguments
+	appearance: arguments
+
+border-radius()
+	for vendor in vendors
+		-{vendor}-border-radius: arguments
+	border-radius: arguments
+
+transition()
+	for vendor in vendors
+		-{vendor}-transition: arguments
+	transition: arguments
+
+// Body styles
+body
+	font-family: Noto Sans
+	color: $primaryTextB
+	margin: 0
+	font-size: 1em
+	
+	@media only screen and (max-device-width: 680px)
+		font-size: 2.5em
+	
+// Form styles
+form
+	display: flex
+	justify-content: center
+	text-align: center
+	
+	fieldset
+		width: 30%
+		padding: 1.5em
+		border-radius: 6px
+	
+	input
+		width: 100%
+		margin: 0.75em 0
+		padding: 0.75em
+		box-sizing: border-box
+		appearance: none
+		border-radius: $radius
+		
+		&[type=submit]
+			background-color: $primary500
+			color: $primaryTextW
+
+		&.last
+			margin: 0
+			margin-top: 0.75em
+
+		&.first
+			margin: 0
+			margin-bottom: 0.75em
+
+// Nav styles
+nav	
+	ul
+		list-style-type: none
+		margin: 0
+		padding: 0
+		overflow: hidden
+		background-color: $primary700
+	
+		li
+			float: left
+			
+			&.icon
+				display: none
+				
+			@media only screen and (max-device-width: 680px), (max-width: 680px)
+				&:not(:first-child)
+					display: none
+					
+				&.icon
+					float: right
+					display: inline-block
+					
+				^[1].responsive-nav
+					position: relative
+					
+				^[1].responsive-nav ^[2..-1].icon
+					position: absolute
+					right: 0
+					top: 0
+				
+				^[1].responsive-nav ^[2..-1]
+					float: none
+					display: inline
+				
+				^[1].responsive-nav ^[2..-1] a
+					display: block
+					text-align: left
+									
+			a
+				display: inline-block
+				color: $primaryTextW
+				text-align: center
+				padding: 0.75em 1em
+				text-decoration: none
+				
+				&:hover
+					background-color: $accent200
+					color: $primaryTextB

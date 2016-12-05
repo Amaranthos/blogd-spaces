@@ -6,8 +6,8 @@ block content
 			legend Create Account
 			- if(_error)
 				p(style='color:red')= _error
-			input(class="first", type="email", placeholder="email", name="email", required)
+			input.first(type="email", placeholder="email", name="email", required)
 			input(type="password", placeholder="password", name="password", required)
 			input(type="text", placeholder="name", name="name", required)
-			input(class="last", type="submit", value="Create Account")
+			input.last(type="submit", value="Create Account")
 	
