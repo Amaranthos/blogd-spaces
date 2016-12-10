@@ -1,5 +1,7 @@
 module blogd.webapp;
 
+import dauth;
+
 import vibe.d;
 import blogd.userdata;
 import blogd.displaydata;
@@ -7,10 +9,12 @@ import blogd.displaydata;
 final class WebApp {
 	private enum auth = before!ensureUserAuthed("_user");
 	private SessionVar!(UserData, "user") _authdUser;
-	private MongoClient mongo;
+	private MongoClient mongoClient;
+	private MongoCollection mongoUsers;
 
 	this() {
-		mongo = connectMongoDB("127.0.0.1", 27017);
+		mongoClient = connectMongoDB("127.0.0.1", 27017);
+		mongoUsers = mongoClient.getDatabase("blogd")["blogd.users"];
 	}
 
 	void index() {
@@ -26,15 +30,17 @@ final class WebApp {
 	}
 
 	@errorDisplay!getLogin
-	void postLogin(string email, string password) {
+	void postLogin(string email, char[] password) {
 		// Check account
-		auto account = mongo.getDatabase("blogd")["blogd.users"].findOne(["email": email, "password": password]);
-		enforce(account != Bson(null), "Incorrect email/password");
-		
+		auto account = mongoUsers.findOne(["email": email]);
+		DisplayData display = {"test", _authdUser};
+
+		enforce(account != Bson(null) && isSameHash(password.toPassword, account["password"].get!string.parseHash), "Incorrect email/password.");
+
 		// Add logged in user to session
 		UserData user;
 		user.loggedIn = true;
-		user.name = "Josh"; // TODO: Populate with user's login
+		user.name = account["name"].get!string;
 		this._authdUser = user;
 
 		// Go home
@@ -45,6 +51,7 @@ final class WebApp {
 		// Terminate session
 		_authdUser = UserData.init;
 		terminateSession();
+
 		// Go home
 		redirect("/");
 	}
@@ -63,17 +70,25 @@ final class WebApp {
 
 	@path("/user/create")
 	@errorDisplay!getUserCreate
-	void postUserCreate(string email, string password, string name) {
+	void postUserCreate(ValidEmail email, ValidPassword password, string name) {
 		// Send logged in user home
 		if(_authdUser.loggedIn) {
 			redirect("/");
 		}
 
 		// Check new user doesn't exist
-		auto account = mongo.getDatabase("blogd")["blogd.users"].findOne(["email": email, "password": password]);
-		enforce(account == Bson(null), "Account already exists");
+		auto account = mongoUsers.findOne(["email": email.toString]);
+		enforce(account == Bson(null), "That account already exists.");
 
 		// Create new user
+		auto hashedPassword = password.toString.dup.toPassword.makeHash.toString;
+		mongoUsers.insert(["email": email.toString, "password": hashedPassword, "name": name]);
+
+		// Log user in
+		UserData user;
+		user.loggedIn = true;
+		user.name = name;
+		this._authdUser = user;
 
 		// Go home
 		redirect("/");

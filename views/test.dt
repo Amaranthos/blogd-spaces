@@ -1,5 +1,4 @@
 extends base.dt
 
 block content
-	p Test
-		
+	p Test	

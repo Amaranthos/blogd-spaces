@@ -6,6 +6,7 @@
 	"name": "blogd-spaces",
 	"dependencies": {
 		"vibe-d": "~>0.7.26",
+		"dauth": "~>0.6.2",
 	},
 	"license": "MIT",
 	"copyright": "Copyright © 2016, Joshua Hodkinson",
