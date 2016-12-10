@@ -1,6 +1,7 @@
 language: d  
 
 script:
+  - npm install -g stylus
   - dub fetch doveralls
   - dub build
   - dub test --coverage --combined
