@@ -3,4 +3,3 @@ extends base.dt
 block content
 	p Hello #{display.user.name}
 	
-	

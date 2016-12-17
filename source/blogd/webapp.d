@@ -1,8 +1,8 @@
 module blogd.webapp;
 
 import dauth;
-
 import vibe.d;
+import std.random;
 import blogd.userdata;
 import blogd.displaydata;
 
@@ -14,7 +14,7 @@ final class WebApp {
 
 	this() {
 		mongoClient = connectMongoDB("127.0.0.1", 27017);
-		mongoUsers = mongoClient.getDatabase("blogd")["blogd.users"];
+		mongoUsers = mongoClient.getDatabase("blogd")["users"];
 	}
 
 	void index() {
@@ -81,8 +81,9 @@ final class WebApp {
 		enforce(account == Bson(null), "That account already exists.");
 
 		// Create new user
-		auto hashedPassword = password.toString.dup.toPassword.makeHash.toString;
-		mongoUsers.insert(["email": email.toString, "password": hashedPassword, "name": name]);
+		auto rand = Mt19937(unpredictableSeed);
+		auto hashed = makeHash(password.dup.toPassword, randomSalt(rand));
+		mongoUsers.insert(["email": email.toString, "password": hashed.toString, "name": name]);
 
 		// Log user in
 		UserData user;
