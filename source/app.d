@@ -1,5 +1,5 @@
 import vibe.d;
-import blogd.webapp;
+import blogd.web;
 
 shared static this() {
 	auto faviconSettings = new HTTPFileServerSettings;
@@ -16,7 +16,7 @@ shared static this() {
 	auto router = new URLRouter;
 	router.get("/static/*", serveStaticFiles("public/", filesServerSettings));
 	router.get("/favicon.ico", serveStaticFiles("public/", faviconSettings));
-	router.registerWebInterface(new WebApp);
+	router.registerWebInterface(new Web);
 
 	auto settings = new HTTPServerSettings;
 	settings.sessionStore = new MemorySessionStore;

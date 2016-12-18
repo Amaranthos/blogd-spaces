@@ -3,10 +3,10 @@ extends base.dt
 block content
 	form#login(method="post", action='/login')
 		fieldset 
-			legend Login
+			legend login
 			- if(_error)
 				p(style='color:red')= _error
 			input.first(type="email", placeholder="email", name="email", required)
 			input(type="password", placeholder="password", name="password", required)
-			input.last(type="submit", value="Login")
+			input.last(type="submit", value="login")
 				
