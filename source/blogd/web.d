@@ -52,7 +52,7 @@ final class Web {
 	* Authors: Joshua Hodkinson
 	*/
 	this() {
-		_mongoClient = connectMongoDB("127.0.0.1", 27017);
+		_mongoClient = connectMongoDB("localhost", 27017);
 		_mongoUsers = _mongoClient.getDatabase("blogd")["users"];
 		_mongoPosts = _mongoClient.getDatabase("blogd")["posts"];
 	}
