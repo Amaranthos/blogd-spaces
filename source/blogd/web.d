@@ -17,6 +17,7 @@ module blogd.web;
 import dauth;
 import vibe.d;
 import std.random;
+import std.process;
 import blogd.userdata;
 import blogd.displaydata;
 
@@ -52,13 +53,9 @@ final class Web {
 	* Authors: Joshua Hodkinson
 	*/
 	this() {
-		_mongoClient = connectMongoDB("mongodb://mongo/");
+		_mongoClient = connectMongoDB(environment.get("MONGO", "mongodb://localhost")); // mongodb://mongo/
 		_mongoUsers = _mongoClient.getDatabase("blogd")["users"];
 		_mongoPosts = _mongoClient.getDatabase("blogd")["posts"];
-	}
-
-	unittest {
-		
 	}
 
 	/**
@@ -75,11 +72,7 @@ final class Web {
 		DisplayData display = {"home", _authdUser};
 		render!("index.dt", display);
 	}
-
-	unittest {
-		
-	}
-
+	
 	/**
 	* GET "/login", displays login form
 	*
@@ -95,11 +88,7 @@ final class Web {
 		DisplayData display = {"login", _authdUser};
 		render!("login.dt", display, _error);
 	}
-
-	unittest {
-		
-	}
-
+	
 	/**
 	* POST "/login", auth'd user, redirects to GET "/" on success or GET "/login" on failure
 	*
@@ -131,11 +120,7 @@ final class Web {
 		// Go home
 		redirect("/");
 	}
-
-	unittest {
 		
-	}
-	
 	/**
 	* GET "/logout", requires auth'd user, logs user out + terminates session and redirects to GET "/"
 	*
@@ -154,11 +139,7 @@ final class Web {
 		// Go home
 		redirect("/");
 	}
-
-	unittest {
 		
-	}
-	
 	/**
 	* GET "/user/create", displays create account form, auth'd user redirects to GET "/"
 	*
@@ -178,11 +159,7 @@ final class Web {
 		DisplayData display = {"create account", _authdUser};
 		render!("user_create.dt", display, _error);
 	}
-
-	unittest {
 		
-	}
-	
 	/**
 	* POST "/user/create", validates new user details and inserts in db, redirects to GET "/" on success or to GET "/user/create" on failure
 	* 
@@ -227,11 +204,7 @@ final class Web {
 		// Go home
 		redirect("/");
 	}
-
-	unittest {
 		
-	}
-	
 	/**
 	* GET "/test", requires auth'd user, displays a test page
 	*
@@ -263,14 +236,16 @@ final class Web {
 		}
 		return Web._authdUser.name;
 	}
-
-	unittest {
-		
-	}
-
+	
 	mixin PrivateAccessProxy;
 }
 
 unittest {
-		
+	auto router = new URLRouter;
+	router.registerWebInterface(new Web);
+
+	auto res = createTestHTTPServerResponse(null, new MemorySessionStore);
+	router.handleRequest(createTestHTTPServerRequest(URL("http://localhost/")), res);
+
+	logInfo("Res:" ~ res.toString);
 }

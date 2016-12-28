@@ -4,6 +4,5 @@ script:
   - npm install -g stylus
   - dub fetch doveralls
   - dub build
-  - dub test --coverage --combined
-  # - dub test -b unittest-cov --nodeps 
+  - dub test -b unittest-cov
   - dub run doveralls

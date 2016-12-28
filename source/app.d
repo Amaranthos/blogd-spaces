@@ -1,7 +1,8 @@
 import vibe.d;
+import std.process;
 import blogd.web;
 
-shared static this() {
+void main() {
 	auto faviconSettings = new HTTPFileServerSettings;
 	faviconSettings.serverPathPrefix = "/";
 	faviconSettings.options = HTTPFileServerOption.failIfNotFound;
@@ -20,10 +21,11 @@ shared static this() {
 
 	auto settings = new HTTPServerSettings;
 	settings.sessionStore = new MemorySessionStore;
-	settings.port = 8080;
+	settings.port = environment.get("PORT", "8080").to!ushort;
 	settings.bindAddresses = ["::1", "0.0.0.0"];
 	listenHTTP(settings, router);
 
 	logInfo("Please open http://127.0.0.1:8080/ in your browser.");
-}
 
+	runApplication();
+}
