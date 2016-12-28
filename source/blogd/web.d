@@ -246,6 +246,6 @@ unittest {
 
 	auto res = createTestHTTPServerResponse(null, new MemorySessionStore);
 	router.handleRequest(createTestHTTPServerRequest(URL("http://localhost/")), res);
-
+	//assert(res);
 	logInfo("Res:" ~ res.toString);
 }
