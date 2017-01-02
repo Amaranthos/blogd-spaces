@@ -25,7 +25,7 @@ void main() {
 	settings.bindAddresses = ["::1", "0.0.0.0"];
 	listenHTTP(settings, router);
 
-	logInfo("Please open http://127.0.0.1:8080/ in your browser.");
+	logInfo("Please open http://127.0.0.1:"~ environment.get("PORT", "8080") ~ "/ in your browser.");
 
 	runApplication();
 }
