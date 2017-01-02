@@ -6,7 +6,7 @@ block content
 			legend login
 			- if(_error)
 				p(style='color:red')= _error
-			input.first(type="email", placeholder="email", name="email", required)
+			input.first(type="email", placeholder="email", name="email", required, autofocus)
 			input(type="password", placeholder="password", name="password", required)
 			input.last(type="submit", value="login")
 				

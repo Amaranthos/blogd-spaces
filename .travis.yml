@@ -4,6 +4,7 @@ script:
   - npm install -g stylus
   - dub fetch doveralls
   - dub build
-  - dub test --coverage --combined
+  # need to wrap mongo calls in an interface so that a mock db can be called for unit tests
+  # - dub test --coverage --combined
   # - dub test -b unittest-cov
   - dub run doveralls
