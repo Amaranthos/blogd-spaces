@@ -1,0 +1,4 @@
+.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+	input.mdl-textfield__input(type="email", name="email", data-required, autofocus)
+	label.mdl-textfield__label(for="email") email*
+	span.mdl-textfield__error valid email adress required

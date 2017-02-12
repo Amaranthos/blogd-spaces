@@ -109,7 +109,7 @@ final class Web {
 		auto account = _mongoUsers.findOne(["email": email.toString]);
 		DisplayData display = {"test", _authdUser};
 
-		enforce(account != Bson(null) && isSameHash(password.dup.toPassword, account["password"].get!string.parseHash), "Incorrect email/password.");
+		enforce(account != Bson(null) && isSameHash(password.dup.toPassword, account["password"].get!string.parseHash), "incorrect email/password");
 
 		// Add logged in user to session
 		UserData user;
@@ -188,7 +188,7 @@ final class Web {
 
 		// Check new user doesn't exist
 		auto account = _mongoUsers.findOne(["email": email.toString]);
-		enforce(account == Bson(null), "That account already exists.");
+		enforce(account == Bson(null), "that account already exists");
 
 		// Create new user
 		auto rand = Mt19937(unpredictableSeed);

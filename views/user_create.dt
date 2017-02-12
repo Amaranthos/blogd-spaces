@@ -1,13 +1,24 @@
 extends base.dt
 
+block scripts
+	script(src="/static/mdl-textfield__input.js")
+
 block content
-	form#login(method="post", action='/user/create')
-		fieldset 
-			legend create account
-			- if(_error)
-				p(style='color:red')= _error
-			input.first(type="email", placeholder="email", name="email", required, autofocus)
-			input(type="password", placeholder="password", name="password", required)
-			input(type="text", placeholder="display name", name="name", required)
-			input.last(type="submit", value="create account")
-	
+	.mdl-grid
+		form.mdl-cell.mdl-cell--4-col.mdl-card.mdl-shadow--2dp(method="post", action="/user/create")
+			include form_title.dt
+
+			.mdl-card__supporting-text
+				include form_error.dt
+
+				include form_email.dt
+
+				include form_password.dt
+
+				.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+					input.mdl-textfield__input(type="text", name="name", data-required)
+					label.mdl-textfield__label(for="name") display name*
+					span.mdl-textfield__error display name required
+				
+			include form_submit.dt
+		

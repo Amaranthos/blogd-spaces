@@ -1,0 +1,2 @@
+- if(_error)
+	p.form__error= _error

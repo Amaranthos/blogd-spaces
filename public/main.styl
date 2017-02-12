@@ -1,28 +1,9 @@
-// Sizes
-$radius = 6px
-
 // Other colours
 $white = #FFFFFF
 $black = #000000
 
-// Primary colours
-$primary100 = #D1C4E9
-$primary500 = #673AB7
-$primary700 = #512DA8
-
-// Accent xolours
-$accent100 = #FFFF8D
-$accent200 = #FFFF00
-$accent400 = #FFEA00
-
-// Text colours
-$primaryTextB = alpha($black, 0.87)
-$secondaryTextB = alpha($black, 0.54)
-$hintTextB = alpha($black, 0.38)
-
-$primaryTextW = alpha($white, 0.87)
-$secondaryTextW = alpha($white, 0.54)
-$hintTextW = alpha($white, 0.38)
+// Error colours
+$error_red = #D50000
 
 // Vendor mixins
 vendors = webkit moz o ms
@@ -45,90 +26,30 @@ transition()
 // Body styles
 body
 	font-family: Noto Sans
-	color: $primaryTextB
 	margin: 0
 	font-size: 1em
 	
-	@media only screen and (max-device-width: 680px)
-		font-size: 2.5em
+// Main styles
+main
 	
+	&.mdl-layout__content
+		.mdl-grid
+			padding-top: 40px;
+
 // Form styles
 form
-	display: flex
-	justify-content: center
-	text-align: center
+	// justify-content: center
 	
-	fieldset
-		width: 30%
-		padding: 1.5em
-		border-radius: 6px
-	
-	input
-		width: 100%
-		margin: 0.75em 0
-		padding: 0.75em
-		box-sizing: border-box
-		appearance: none
-		border-radius: $radius
+	&.mdl-cell
+		margin: 0 auto
+
+	.mdl-card__supporting-text
 		
-		&[type=submit]
-			background-color: $primary500
-			color: $primaryTextW
+		.mdl-textfield
+			display: block
+			width: 100%
 
-		&.last
-			margin: 0
-			margin-top: 0.75em
-
-		&.first
-			margin: 0
-			margin-bottom: 0.75em
-
-// Nav styles
-nav	
-	ul
-		list-style-type: none
-		margin: 0
-		padding: 0
-		overflow: hidden
-		background-color: $primary700
-	
-		li
-			float: left
-			
-			&.icon
-				display: none
-				
-			@media only screen and (max-device-width: 680px), (max-width: 680px)
-				&//:not(:first-child)
-					display: none
-					
-				&.icon
-					float: left
-					display: inline-block
-					
-				^[1].responsive-nav
-					position: relative
-					
-				// ^[1].responsive-nav ^[2..-1].icon
-				// 	position: absolute
-				// 	left: 0
-				// 	top: 0
-				
-				^[1].responsive-nav ^[2..-1]
-					float: none
-					display: inline
-				
-				^[1].responsive-nav ^[2..-1] a
-					display: block
-					text-align: left
-									
-			a
-				display: inline-block
-				color: $primaryTextW
-				text-align: center
-				padding: 0.75em 1em
-				text-decoration: none
-				
-				&:hover
-					background-color: $accent200
-					color: $primaryTextB
+// Misc
+p.form__error
+	color: $error_red
+	font-size: 16px

@@ -1,0 +1,2 @@
+.mdl-card__actions.mdl-card--border
+	input.mdl-button.mdl-js-button.mdl-js-ripple-effect.mdl-button--colored(type="submit", value="#{display.pageTitle}")
