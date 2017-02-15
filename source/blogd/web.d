@@ -14,12 +14,7 @@
 
 module blogd.web;
 
-import dauth;
 import vibe.d;
-import std.random;
-import std.process;
-import blogd.userdata;
-import blogd.displaydata;
 
 /**
 * The class which outlines the blog.spaces functionality
@@ -37,12 +32,18 @@ import blogd.displaydata;
 * Authors: Joshua Hodkinson
 */
 final class Web {
+	import dauth;
+	import blogd.userdata;
+	import blogd.displaydata;
+	import blogd.models.account;
+
 	private {
 		enum auth = before!ensureUserAuthed("_user"); /// Annotation that ensures a user is auth'd
 		SessionVar!(UserData, "user") _authdUser; /// The auth'd user
 		MongoClient _mongoClient; /// Mongo db instance
-		MongoCollection _mongoUsers; /// Mongo users collection
+		//MongoCollection _mongoUsers; /// Mongo users collection
 		MongoCollection _mongoPosts; /// Mongo posts collection
+		IAccountRepo _accountsRepo; /// User accounts data source
 	}
 
 	/** 
@@ -53,9 +54,10 @@ final class Web {
 	* Authors: Joshua Hodkinson
 	*/
 	this() {
+		import std.process;
 		_mongoClient = connectMongoDB(environment.get("MONGO", "mongodb://localhost")); // mongodb://mongo/
-		_mongoUsers = _mongoClient.getDatabase("blogd")["users"];
 		_mongoPosts = _mongoClient.getDatabase("blogd")["posts"];
+		_accountsRepo = new AccountRepo(_mongoClient.getDatabase("blogd")["users"]);
 	}
 
 	/**
@@ -106,7 +108,7 @@ final class Web {
 	@errorDisplay!getLogin
 	void postLogin(ValidEmail email, ValidPassword password) {
 		// Check account
-		auto account = _mongoUsers.findOne(["email": email.toString]);
+		auto account = _accountsRepo.get(email); // _mongoUsers.findOne(["email": email.toString]);
 		DisplayData display = {"test", _authdUser};
 
 		enforce(account != Bson(null) && isSameHash(password.dup.toPassword, account["password"].get!string.parseHash), "incorrect email/password");
@@ -187,13 +189,14 @@ final class Web {
 		}
 
 		// Check new user doesn't exist
-		auto account = _mongoUsers.findOne(["email": email.toString]);
+		auto account = _accountsRepo.get(email); // _mongoUsers.findOne(["email": email.toString]);
 		enforce(account == Bson(null), "that account already exists");
 
 		// Create new user
+		import std.random : Mt19937, unpredictableSeed;
 		auto rand = Mt19937(unpredictableSeed);
 		auto hashed = makeHash(password.dup.toPassword, randomSalt(rand));
-		_mongoUsers.insert(["email": email.toString, "password": hashed.toString, "name": name]);
+		_accountsRepo.put(Account(name, email, password)); //_mongoUsers.insert(["email": email.toString, "password": hashed.toString, "name": name]);
 
 		// Log user in
 		UserData user;
