@@ -193,6 +193,7 @@ final class Web {
 		enforce(account == Account.init, "that account already exists");
 
 		// Create new user
+		// TODO: makeHash fixed in Dauth 0.6.3
 		import std.random : Mt19937, unpredictableSeed;
 		auto rand = Mt19937(unpredictableSeed);
 		auto hashed = makeHash(password.dup.toPassword, randomSalt(rand));

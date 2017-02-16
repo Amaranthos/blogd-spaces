@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<title>Class Web</title>
+		<link rel="stylesheet" type="text/css" href="../../styles/ddox.css"/>
+		<link rel="stylesheet" href="../../prettify/prettify.css" type="text/css"/>
+		<script type="text/javascript" src="../../scripts/jquery.js">/**/</script>
+		<script type="text/javascript" src="../../scripts/ddox.js">/**/</script>
+	</head>
+	<body onload="setupDdox();">
+		<nav id="main-nav">
+						<ul class="tree-view">
+							<li class="tree-view">
+								<a href="#" class="package">blogd</a>
+						<ul class="tree-view">
+							<li class="collapsed tree-view">
+								<a href="#" class="package">models</a>
+						<ul class="tree-view">
+							<li>
+								<a href="../../blogd/models/account.html" class=" module">account</a>
+							</li>
+						</ul>
+							</li>
+							<li>
+								<a href="../../blogd/displaydata.html" class=" module">displaydata</a>
+							</li>
+							<li>
+								<a href="../../blogd/userdata.html" class=" module">userdata</a>
+							</li>
+							<li>
+								<a href="../../blogd/web.html" class="selected module">web</a>
+							</li>
+						</ul>
+							</li>
+						</ul>
+				<noscript>
+					<p style="color: red">The search functionality needs JavaScript enabled</p>
+				</noscript>
+				<div id="symbolSearchPane" style="display: none">
+					<p>
+						<input id="symbolSearch" type="text" placeholder="Search for symbols" onchange="performSymbolSearch(24);" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"/>
+					</p>
+	<ul id="symbolSearchResults" style="display: none"></ul>
+	<script type="application/javascript" src="../../symbols.js"></script>
+	<script type="application/javascript">
+var symbolSearchRootDir = "../../";
+$('#symbolSearchPane').show();
+	</script>
+				</div>
+		</nav>
+		<div id="main-contents">
+			<h1>Class Web</h1>
+			<section>
+				<p>The class which outlines the blog.spaces functionality
+</p>
+<section><p>This class is registered with the URLRouter as a web interface.
+ It's scope is to allow users to create and read blogs, and for users to interact with their accounts.
+ The following route conventions will be used:
+ <ul> 	<li>"/": home, login/logout</li>
+</p>
+<p> 	<li>"/user/": create account, view/update account details</li>
+</p>
+<p> 	<li>"/read/": reading/searching existing blog posts</li>
+</p>
+<p> 	<li>"/write/": writing blog posts</li>
+ </ul>
+</p>
+</section>
+
+					<section>
+						<h3>Inherits from</h3>
+						<ul>
+							<li>
+								<code class="prettyprint lang-d"><span class="typ">Object</span></code>
+ (base class)
+							</li>
+						</ul>
+					</section>
+					<section>
+						<h3>Constructors</h3>
+						<table>
+							<col class="caption"/>
+							<tr>
+								<th>Name</th>
+								<th>Description</th>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../blogd/web/Web.this.html" class="public">
+										<code>this</code>
+									</a>
+								</td>
+								<td>Constructor to init members
+</td>
+							</tr>
+						</table>
+					</section>
+					<section>
+						<h3>Fields</h3>
+						<table>
+							<col class="caption"/>
+							<tr>
+								<th>Name</th>
+								<th>Type</th>
+								<th>Description</th>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../blogd/web/Web._accountsRepo.html" class="private"><code>_accountsRepo</code></a>
+								</td>
+								<td class="typecol"><code class="prettyprint lang-d"><a href="../../blogd/models/account/IAccountRepo.html"><span class="typ">IAccountRepo</span></a></code></td>
+								<td>User accounts data source
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../blogd/web/Web._authdUser.html" class="private"><code>_authdUser</code></a>
+								</td>
+								<td class="typecol"><code class="prettyprint lang-d"><span class="pln">vibe<wbr/></span><span class="pun">.</span><span class="pln">web<wbr/></span><span class="pun">.</span><span class="pln">web<wbr/></span><span class="pun">.</span><span class="pln">__T10SessionVarTS5blogd8userdata8UserDataVAyaa4_75736572Z<wbr/></span><span class="pun">.</span><span class="typ">SessionVar</span></code></td>
+								<td>The auth'd user
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../blogd/web/Web._mongoClient.html" class="private"><code>_mongoClient</code></a>
+								</td>
+								<td class="typecol"><code class="prettyprint lang-d"><span class="pln">vibe<wbr/></span><span class="pun">.</span><span class="pln">db<wbr/></span><span class="pun">.</span><span class="pln">mongo<wbr/></span><span class="pun">.</span><span class="pln">client<wbr/></span><span class="pun">.</span><span class="typ">MongoClient</span></code></td>
+								<td>Mongo db instance
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../blogd/web/Web._mongoPosts.html" class="private"><code>_mongoPosts</code></a>
+								</td>
+								<td class="typecol"><code class="prettyprint lang-d"><span class="pln">vibe<wbr/></span><span class="pun">.</span><span class="pln">db<wbr/></span><span class="pun">.</span><span class="pln">mongo<wbr/></span><span class="pun">.</span><span class="pln">collection<wbr/></span><span class="pun">.</span><span class="typ">MongoCollection</span></code></td>
+								<td>Mongo posts collection
+</td>
+							</tr>
+						</table>
+					</section>
+					<section>
+						<h3>Methods</h3>
+						<table>
+							<col class="caption"/>
+							<tr>
+								<th>Name</th>
+								<th>Description</th>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../blogd/web/Web.getLogin.html" class="public">
+										<code>getLogin</code>
+									</a>
+								</td>
+								<td>GET "/login", displays login form
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../blogd/web/Web.getLogout.html" class="public">
+										<code>getLogout</code>
+									</a>
+								</td>
+								<td>GET "/logout", requires auth'd user, logs user out + terminates session and redirects to GET "/"
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../blogd/web/Web.getTest.html" class="public">
+										<code>getTest</code>
+									</a>
+								</td>
+								<td>GET "/test", requires auth'd user, displays a test page
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../blogd/web/Web.getUserCreate.html" class="public">
+										<code>getUserCreate</code>
+									</a>
+								</td>
+								<td>GET "/user/create", displays create account form, auth'd user redirects to GET "/"
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../blogd/web/Web.index.html" class="public">
+										<code>index</code>
+									</a>
+								</td>
+								<td>GET "/", displays home page
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../blogd/web/Web.postLogin.html" class="public">
+										<code>postLogin</code>
+									</a>
+								</td>
+								<td>POST "/login", auth'd user, redirects to GET "/" on success or GET "/login" on failure
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../blogd/web/Web.postUserCreate.html" class="public">
+										<code>postUserCreate</code>
+									</a>
+								</td>
+								<td>POST "/user/create", validates new user details and inserts in db, redirects to GET "/" on success or to GET "/user/create" on failure
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../blogd/web/Web.ensureUserAuthed.html" class="private">
+										<code>ensureUserAuthed</code>
+									</a>
+								</td>
+								<td>Ensures current user is auth'd, redirects to GET "/login" on failure
+</td>
+							</tr>
+						</table>
+					</section>
+
+			</section>
+			<section>
+				<h2>Authors</h2>
+<p>Joshua Hodkinson
+</p>
+
+			</section>
+			<section>
+				<h2>Copyright</h2>
+<p>&copy; 2015 Joshua Hodkinson
+</p>
+
+			</section>
+			<section>
+				<h2>License</h2>
+<p>MIT as per included LICENSE document
+</p>
+
+			</section>
+		</div>
+	</body>
+</html>

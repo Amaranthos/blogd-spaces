@@ -1,0 +1,13 @@
+name "blogd-spaces"
+description "A simple vibe.d server application."
+
+license "MIT"
+copyright "Copyright © 2016, Joshua Hodkinson"
+authors "Joshua Hodkinson"
+
+dependency "vibe-d" version="~>0.7.30"
+dependency "dauth" version="~>0.6"
+
+preGenerateCommands "stylus public"
+
+x:ddoxFilterArgs "--ex" "vibe." "--ex" "diet." "--ex" "dauth."
