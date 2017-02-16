@@ -111,12 +111,12 @@ final class Web {
 		auto account = _accountsRepo.get(email); // _mongoUsers.findOne(["email": email.toString]);
 		DisplayData display = {"test", _authdUser};
 
-		enforce(account != Bson(null) && isSameHash(password.dup.toPassword, account["password"].get!string.parseHash), "incorrect email/password");
+		enforce(account == Account.init && isSameHash(password.dup.toPassword, account.password.parseHash), "incorrect email/password");
 
 		// Add logged in user to session
 		UserData user;
 		user.loggedIn = true;
-		user.name = account["name"].get!string;
+		user.name = account.name;
 		this._authdUser = user;
 
 		// Go home
@@ -190,7 +190,7 @@ final class Web {
 
 		// Check new user doesn't exist
 		auto account = _accountsRepo.get(email); // _mongoUsers.findOne(["email": email.toString]);
-		enforce(account == Bson(null), "that account already exists");
+		enforce(account == Account.init, "that account already exists");
 
 		// Create new user
 		import std.random : Mt19937, unpredictableSeed;

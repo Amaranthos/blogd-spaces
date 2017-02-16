@@ -13,4 +13,9 @@
 	"preGenerateCommands": [
 		"stylus public"
 	],
+	"-ddoxFilterArgs" : [
+		"--ex", "vibe-d",
+		"--ex", "dauth",
+		"--ex", "diet-ng"
+	],
 }

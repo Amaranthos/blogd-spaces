@@ -4,10 +4,20 @@
 			"E:\\blogd-spaces\\source\\",
 			"C:\\Users\\joshu\\AppData\\Roaming\\dub\\packages\\dauth-0.6.2\\dauth\\src",
 			"C:\\Users\\joshu\\AppData\\Roaming\\dub\\packages\\vibe-d-0.7.30\\vibe-d\\source\\",
-			"C:\\Users\\joshu\\AppData\\Roaming\\dub\\packages\\libevent-2.0.2_2.0.16\\libevent"
+			"C:\\Users\\joshu\\AppData\\Roaming\\dub\\packages\\libevent-2.0.2_2.0.16\\libevent",
+			"C:\\Users\\joshu\\AppData\\Roaming\\dub\\packages\\openssl-1.1.5_1.0.1g\\openssl",
+			"C:\\Users\\joshu\\AppData\\Roaming\\dub\\packages\\diet-ng-1.1.0\\diet-ng\\source\\"
 		]
 	},
 	"folders": [
+		{
+			"follow_symlinks": true,
+			"name": "diet-ng",
+			"path": "C:\\Users\\joshu\\AppData\\Roaming\\dub\\packages\\diet-ng-1.1.0\\diet-ng\\",
+			"folder_exclude_patterns": [
+				".dub"
+			]
+		},
 		{
 			"follow_symlinks": true,
 			"name": "vibe-d:utils",

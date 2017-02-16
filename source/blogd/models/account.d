@@ -28,9 +28,9 @@ struct Account {
 }
 
 interface IAccountRepo {
-	Bson get();
-	Bson get(ValidEmail email);
-	Bson get(string name);
+	Account get();
+	Account get(ValidEmail email);
+	Account[] get(string name);
 	void put(Account user);
 }
 
@@ -46,9 +46,9 @@ class AccountRepo : IAccountRepo {
 	*
 	* Authors: Joshua Hodkinson
 	*/
-	public Bson get() {
+	public Account get() {
 		// TODO: implement
-		return Bson(null);
+		return Account.init;
 	}
 
 	/**
@@ -56,9 +56,9 @@ class AccountRepo : IAccountRepo {
 	*
 	* Authors: Joshua Hodkinson
 	*/
-	public Bson get(ValidEmail email) {
+	public Account get(ValidEmail email) {
 		// TODO: implement
-		return Bson(null);
+		return Account.init;
 	}
 
 	/**
@@ -66,9 +66,10 @@ class AccountRepo : IAccountRepo {
 	*
 	* Authors: Joshua Hodkinson
 	*/
-	public Bson get(string name) {
+	public Account[] get(string name) {
 		// TODO: implement
-		return Bson(null);
+		Account[] accounts;
+		return accounts;
 	}
 
 	/**
