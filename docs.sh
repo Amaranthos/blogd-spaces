@@ -24,10 +24,6 @@ git commit -m "Deploying updated docs: ${sha}"
 
 cd ..
 
-echo
-ls
-echo
-
 encryptedKeyVar="encrypted_${ENCRYPTION_LABEL}_key"
 encryptedIvVar="encrypted_${ENCRYPTION_LABEL}_iv"
 encryptedKey=${!encryptedKeyVar}
