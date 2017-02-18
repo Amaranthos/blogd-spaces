@@ -13,4 +13,3 @@ script:
 env:
   global:
     ENCRYPTION_LABEL: "d3336194070d"
-    COMMIT_AUTHOR_EMAIL: "joshua.hodkinson.42@gmail.com"

@@ -7,19 +7,18 @@ sha=$(git rev-parse --verify HEAD)
 
 dub build -b ddox
 echo "Docs built, commiting and pushing"
-cd "docs/"
+
+git config user.name "Travis CI"
+git config user.email "joshua.hodkinson.42@gmail.com"
 
 if [[ -z $(git diff --exit-code) ]]; then
 	echo "No changes to docs"
 	exit 0
 fi
 
-git config user.name "Travis CI"
-git config user.email "$COMMIT_AUTHOR_EMAIL"
-
 git status
-git add -A
-git commit -m "Deploying updated docs"
+git add -A .
+git commit -m "Deploying updated docs: ${sha}"
 
 encryptedKeyVar="encrypted_${ENCRYPTION_LABEL}_key"
 encryptedIvVar="encrypted_${ENCRYPTION_LABEL}_iv"
