@@ -3,6 +3,8 @@
 * 
 * The scope of this web app is to create/authenticate users, to create, edit and display blogs and to customize user information
 *
+* Testing updated docs
+*
 * TODO: Extract db operations to a separate REST interface
 * 
 * Copyright: &copy; 2015 Joshua Hodkinson
