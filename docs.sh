@@ -1,32 +1,34 @@
 #!/bin/bash
 set -e
 
-repo=$(git config remote.origin.url)
-sshRepo=${repo/https:\/\/github.com\//git@github.com:}
-sha=$(git rev-parse --verify HEAD)
+pwd
 
-dub build -b ddox
-echo "Docs built, commiting and pushing"
+# repo=$(git config remote.origin.url)
+# sshRepo=${repo/https:\/\/github.com\//git@github.com:}
+# sha=$(git rev-parse --verify HEAD)
 
-git config user.name "Travis CI"
-git config user.email "joshua.hodkinson.42@gmail.com"
+# dub build -b ddox
+# echo "Docs built, commiting and pushing"
 
-if [[ -z $(git diff --exit-code) ]]; then
-	echo "No changes to docs"
-	exit 0
-fi
+# git config user.name "Travis CI"
+# git config user.email "joshua.hodkinson.42@gmail.com"
 
-git status
-git add -A .
-git commit -m "Deploying updated docs: ${sha}"
+# if [[ -z $(git diff --exit-code) ]]; then
+# 	echo "No changes to docs"
+# 	exit 0
+# fi
 
-encryptedKeyVar="encrypted_${ENCRYPTION_LABEL}_key"
-encryptedIvVar="encrypted_${ENCRYPTION_LABEL}_iv"
-encryptedKey=${!encryptedKeyVar}
-encryptedIv=${!encryptedIvVar}
-openssl aes-256-cbc -K "$encryptedKey" -iv $encryptedIv -in deploy_key.enc -out deploy_key -d
-chmod 600 deploy key
-eval $(ssh-agent -s)
-ssh-add deploy_key
+# git status
+# git add -A
+# git commit -m "Deploying updated docs: ${sha}"
 
-git push $sshRepo "master"
+# encryptedKeyVar="encrypted_${ENCRYPTION_LABEL}_key"
+# encryptedIvVar="encrypted_${ENCRYPTION_LABEL}_iv"
+# encryptedKey=${!encryptedKeyVar}
+# encryptedIv=${!encryptedIvVar}
+# openssl aes-256-cbc -K "$encryptedKey" -iv $encryptedIv -in deploy_key.enc -out deploy_key -d
+# chmod 600 deploy key
+# eval $(ssh-agent -s)
+# ssh-add deploy_key
+
+# git push $sshRepo "master"
