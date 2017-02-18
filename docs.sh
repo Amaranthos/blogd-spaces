@@ -6,6 +6,7 @@ sshRepo=${repo/https:\/\/github.com\//git@github.com:}
 sha=$(git rev-parse --verify HEAD)
 
 dub build -b ddox
+echo "Docs built, commiting and pushing"
 cd "docs/"
 
 if [[ -z $(git diff --exit-code) ]]; then
@@ -16,7 +17,8 @@ fi
 git config user.name "Travis CI"
 git config user.email "$COMMIT_AUTHOR_EMAIL"
 
-git add docs/\*
+git status
+git add -A
 git commit -m "Deploying updated docs"
 
 encryptedKeyVar="encrypted_${ENCRYPTION_LABEL}_key"
