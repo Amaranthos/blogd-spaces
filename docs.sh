@@ -24,12 +24,16 @@ git commit -m "Deploying updated docs: ${sha}"
 
 cd ..
 
+echo
+ls
+echo
+
 encryptedKeyVar="encrypted_${ENCRYPTION_LABEL}_key"
 encryptedIvVar="encrypted_${ENCRYPTION_LABEL}_iv"
 encryptedKey=${!encryptedKeyVar}
 encryptedIv=${!encryptedIvVar}
-openssl aes-256-cbc -K "$encryptedKey" -iv $encryptedIv -in deploy_key.enc -out deploy_key -d
-chmod 600 deploy key
+openssl aes-256-cbc -K "$encryptedKey" -iv "$encryptedIv" -in deploy_key.enc -out deploy_key -d
+chmod 600 deploy_key
 eval $(ssh-agent -s)
 ssh-add deploy_key
 
