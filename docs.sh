@@ -18,9 +18,11 @@ if [[ -z $(git diff --exit-code) ]]; then
 	exit 0
 fi
 
-git status
+# git status
 git add -A .
 git commit -m "Deploying updated docs: ${sha}"
+
+cd ..
 
 encryptedKeyVar="encrypted_${ENCRYPTION_LABEL}_key"
 encryptedIvVar="encrypted_${ENCRYPTION_LABEL}_iv"
