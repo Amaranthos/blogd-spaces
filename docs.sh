@@ -3,6 +3,7 @@ set -e
 
 repo=$(git config remote.origin.url)
 sshRepo=${repo/https:\/\/github.com\//git@github.com:}
+echo $sshRepo
 sha=$(git rev-parse --verify HEAD)
 
 dub build -b ddox
@@ -33,4 +34,4 @@ chmod 600 deploy_key
 eval $(ssh-agent -s)
 ssh-add deploy_key
 
-git push $sshRepo "master"
+git push $sshRepo "HEAD:master"
