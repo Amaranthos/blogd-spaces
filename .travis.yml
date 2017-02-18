@@ -8,3 +8,9 @@ script:
   # - dub test --coverage --combined
   # - dub test -b unittest-cov
   - dub run doveralls
+  - bash ./docs.sh
+
+env:
+  global:
+    ENCRYPTION_LABEL: "d3336194070d"
+    COMMIT_AUTHOR_EMAIL: "joshua.hodkinson.42@gmail.com"

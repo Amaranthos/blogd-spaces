@@ -8,3 +8,5 @@ __dummy.html
 *.sublime-workspace
 
 public/*.css
+deploy_key
+deploy_key.pub
