@@ -1,13 +1,10 @@
-/** 
+/**
 * This module contains the web app for users to interact with blogd.spaces
-* 
+*
 * The scope of this web app is to create/authenticate users, to create, edit and display blogs and to customize user information
 *
-* Testing updated docs
 *
-* TODO: Extract db operations to a separate REST interface
-* 
-* Copyright: &copy; 2015 Joshua Hodkinson
+* Copyright: &copy; 2017 Joshua Hodkinson
 * License: MIT as per included LICENSE document
 * Authors: Joshua Hodkinson
 * History:
@@ -38,6 +35,8 @@ final class Web {
 	import blogd.userdata;
 	import blogd.displaydata;
 	import blogd.models.account;
+	import blogd.repositories.interfaces.iaccountrepository;
+	import blogd.repositories.accountrepositorymongo;
 
 	private {
 		enum auth = before!ensureUserAuthed("_user"); /// Annotation that ensures a user is auth'd
@@ -45,10 +44,10 @@ final class Web {
 		MongoClient _mongoClient; /// Mongo db instance
 		//MongoCollection _mongoUsers; /// Mongo users collection
 		MongoCollection _mongoPosts; /// Mongo posts collection
-		IAccountRepo _accountsRepo; /// User accounts data source
+		IAccountRepository _accountsRepo; /// User accounts data source
 	}
 
-	/** 
+	/**
 	* Constructor to init members
 	*
 	* This constructor initializes relevant members.
@@ -59,7 +58,7 @@ final class Web {
 		import std.process;
 		_mongoClient = connectMongoDB(environment.get("MONGO", "mongodb://localhost")); // mongodb://mongo/
 		_mongoPosts = _mongoClient.getDatabase("blogd")["posts"];
-		_accountsRepo = new AccountRepo(_mongoClient.getDatabase("blogd")["users"]);
+		_accountsRepo = new AccountRepositoryMongo(_mongoClient.getDatabase("blogd")["users"]);
 	}
 
 	/**
@@ -68,7 +67,7 @@ final class Web {
 	* This is the index route "/" and displays the home page.
 	*
 	* TODO: create feed?
-	* 
+	*
 	* Authors: Joshua Hodkinson
 	*/
 	void index() {
@@ -76,12 +75,12 @@ final class Web {
 		DisplayData display = {"home", _authdUser};
 		render!("index.dt", display);
 	}
-	
+
 	/**
 	* GET "/login", displays login form
 	*
 	* This is a child to the index route "/" and displays the login form.
-	* 
+	*
 	* Params:
 	*	_error = optional parameter to display error information in the rendered template
 	*
@@ -92,7 +91,7 @@ final class Web {
 		DisplayData display = {"login", _authdUser};
 		render!("login.dt", display, _error);
 	}
-	
+
 	/**
 	* POST "/login", auth'd user, redirects to GET "/" on success or GET "/login" on failure
 	*
@@ -104,16 +103,14 @@ final class Web {
 	* Params:
 	*	email = field passed in via form
 	*	password = field passed in via form
-	* 
+	*
 	* Authors: Joshua Hodkinson
 	*/
 	@errorDisplay!getLogin
 	void postLogin(ValidEmail email, ValidPassword password) {
 		// Check account
-		auto account = _accountsRepo.get(email); // _mongoUsers.findOne(["email": email.toString]);
-		DisplayData display = {"test", _authdUser};
-
-		enforce(account == Account.init && isSameHash(password.dup.toPassword, account.password.parseHash), "incorrect email/password");
+		auto account = _accountsRepo.get(email); 
+		enforce(account != Account.init && isSameHash(password.dup.toPassword, account.password.parseHash), "incorrect email/password");
 
 		// Add logged in user to session
 		UserData user;
@@ -124,14 +121,14 @@ final class Web {
 		// Go home
 		redirect("/");
 	}
-		
+
 	/**
 	* GET "/logout", requires auth'd user, logs user out + terminates session and redirects to GET "/"
 	*
 	* This is a child to the index route "/" and handles logging out an auth'd user.
 	* Tracked user details are dropped, the session is terminated and user is redirected to GET "/".
 	* As this route requires auth'd user, non auth'd users are redirected to GET "/login".
-	* 
+	*
 	* Authors: Joshua Hodkinson
 	*/
 	@auth
@@ -143,13 +140,13 @@ final class Web {
 		// Go home
 		redirect("/");
 	}
-		
+
 	/**
 	* GET "/user/create", displays create account form, auth'd user redirects to GET "/"
 	*
 	* This is a child to the user route "/user/" and displays the create user form.
 	* Auth'd users are redirected to GET "/".
-	* 
+	*
 	* Authors: Joshua Hodkinson
 	*/
 	@path("/user/create")
@@ -163,16 +160,16 @@ final class Web {
 		DisplayData display = {"create account", _authdUser};
 		render!("user_create.dt", display, _error);
 	}
-		
+
 	/**
 	* POST "/user/create", validates new user details and inserts in db, redirects to GET "/" on success or to GET "/user/create" on failure
-	* 
+	*
 	* This is a child to the user route "/user/" and handles the submitted create user form.
 	* The submitted data is checked to be valid, and checked to not already exist.
 	* If the user is auth'd they are redirected to GET "/".
 	* Else if the user does exist, or the submitted data isn't valid the user is redirected to GET "/user/create" with an error message.
 	* Else new user password is hashed, user details are inserted into the db, the user is auth'd and redirected to GET "/".
-	* 
+	*
 	* TODO: send confirmation email to user and login via link
 	*
 	* Params:
@@ -210,7 +207,7 @@ final class Web {
 		// Go home
 		redirect("/");
 	}
-		
+
 	/**
 	* GET "/test", requires auth'd user, displays a test page
 	*
@@ -223,7 +220,7 @@ final class Web {
 		DisplayData display = {"test", _authdUser};
 		render!("test.dt", display, _error);
 	}
-	
+
 	/**
 	* Ensures current user is auth'd, redirects to GET "/login" on failure
 	*
@@ -242,7 +239,7 @@ final class Web {
 		}
 		return Web._authdUser.name;
 	}
-	
+
 	mixin PrivateAccessProxy;
 }
 

@@ -1,7 +1,7 @@
 /** 
 * This module contains a struct to represent user data
 * 
-* Copyright: &copy; 2015 Joshua Hodkinson
+* Copyright: &copy; 2017 Joshua Hodkinson
 * License: MIT as per included LICENSE document
 * Authors: Joshua Hodkinson
 * History:
