@@ -21,7 +21,7 @@ cd ..
 
 rm -rf docs/**/* || exit 0
 
-dub build -b ddox
+dub build -vb ddox
 echo "Docs built, commiting and pushing"
 
 cd docs/
