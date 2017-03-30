@@ -1,38 +1,26 @@
-/**
-* This module contains the web app for users to interact with blogd.spaces
-*
-* The scope of this web app is to create/authenticate users, to create, edit and display blogs and to customize user information
-*
-*
-* Copyright: &copy; 2017 Joshua Hodkinson
-* License: MIT as per included LICENSE document
-* Authors: Joshua Hodkinson
-* History:
-* 	V1 - initial release
-*/
-
 module blogd.web;
 
 import vibe.d;
 
 /**
-* The class which outlines the blog.spaces functionality
+* The class which outlines the controls the web app functionality
 *
 * This class is registered with the URLRouter as a web interface.
-* It's scope is to allow users to create and read blogs, and for users to interact with their accounts.
+* It's scope is to create/authenticate users, allow users to create and read blogs, and for users to interact with their accounts.
 * The following route conventions will be used:
 * $(UL
 * 	$(LI "/": home, login/logout)
 * 	$(LI "/user/": create account, view/update account details)
-* 	$(LI "/read/": reading/searching existing blog posts)
-* 	$(LI "/write/": writing blog posts)
+* 	$(LI "/posts/": reading/searching existing blog posts, create new posts)
 * )
 *
+* Copyright: &copy; 2017 Joshua Hodkinson
+* License: MIT as per included LICENSE document
 * Authors: Joshua Hodkinson
 */
 final class Web {
 	import dauth;
-	import blogd.userdata;
+	import blogd.authduser;
 	import blogd.displaydata;
 	import blogd.models.account;
 	import blogd.repositories.interfaces.iaccountrepository;
@@ -40,7 +28,7 @@ final class Web {
 
 	private {
 		enum auth = before!ensureUserAuthed("_user"); /// Annotation that ensures a user is auth'd
-		SessionVar!(UserData, "user") _authdUser; /// The auth'd user
+		SessionVar!(AuthdUser, "user") _authdUser; /// The auth'd user
 		MongoClient _mongoClient; /// Mongo db instance
 		//MongoCollection _mongoUsers; /// Mongo users collection
 		MongoCollection _mongoPosts; /// Mongo posts collection
@@ -56,8 +44,10 @@ final class Web {
 	*/
 	this() {
 		import std.process;
-		_mongoClient = connectMongoDB(environment.get("MONGO", "mongodb://localhost")); // mongodb://mongo/
+		_mongoClient = connectMongoDB(environment.get("MONGO", "mongodb://localhost"));
 		_mongoPosts = _mongoClient.getDatabase("blogd")["posts"];
+		
+		// Repositories TODO: Dependcy injection
 		_accountsRepo = new AccountRepositoryMongo(_mongoClient.getDatabase("blogd")["users"]);
 	}
 
@@ -113,7 +103,7 @@ final class Web {
 		enforce(account != Account.init && isSameHash(password.dup.toPassword, account.password.parseHash), "incorrect email/password");
 
 		// Add logged in user to session
-		UserData user;
+		AuthdUser user;
 		user.loggedIn = true;
 		user.name = account.name;
 		this._authdUser = user;
@@ -134,7 +124,7 @@ final class Web {
 	@auth
 	void getLogout() {
 		// Terminate session
-		_authdUser = UserData.init;
+		_authdUser = AuthdUser.init;
 		terminateSession();
 
 		// Go home
@@ -199,7 +189,7 @@ final class Web {
 		_accountsRepo.put(Account(name, email, password)); //_mongoUsers.insert(["email": email.toString, "password": hashed.toString, "name": name]);
 
 		// Log user in
-		UserData user;
+		AuthdUser user;
 		user.loggedIn = true;
 		user.name = name;
 		this._authdUser = user;

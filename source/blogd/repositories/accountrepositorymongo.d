@@ -1,10 +1,3 @@
-/** 
-* 
-* Copyright: &copy; 2017 Joshua Hodkinson
-* License: MIT as per included LICENSE document
-* Authors: Joshua Hodkinson
-*/
-
 module blogd.repositories.accountrepositorymongo;
 
 import vibe.web.validation : ValidEmail;
@@ -14,6 +7,13 @@ import vibe.data.bson : Bson, deserializeBson;
 import blogd.models.account : Account;
 import blogd.repositories.interfaces.iaccountrepository : IAccountRepository;
 
+/** 
+* Concrete implementation of Account repository interface connected to mongo db
+* 
+* Copyright: &copy; 2017 Joshua Hodkinson
+* License: MIT as per included LICENSE document
+* Authors: Joshua Hodkinson
+*/
 class AccountRepositoryMongo : IAccountRepository {
 	MongoCollection repository;
 
@@ -45,7 +45,7 @@ class AccountRepositoryMongo : IAccountRepository {
 	}
 
 	/**
-	* Returns user accounts with display name
+	* Returns all user accounts with display name
 	*
 	* Authors: Joshua Hodkinson
 	*/
@@ -56,14 +56,16 @@ class AccountRepositoryMongo : IAccountRepository {
 	}
 
 	/**
-	 * 
-	 */
+	* Submits new user to db
+	*
+	* Authors: Joshua Hodkinson
+	*/
 	public void post(Account user) {
 		// TODO: implement
 	}
 
 	/**
-	* Returns user accounts with display name
+	* Updates existing user's details in db
 	*
 	* Authors: Joshua Hodkinson
 	*/
@@ -72,8 +74,10 @@ class AccountRepositoryMongo : IAccountRepository {
 	}
 	
 	/**
-	 * 
-	 */
+	* Removes existing user from db
+	*
+	* Authors: Joshua Hodkinson 
+	*/
 	public void remove(Account user) {
 		// TODO: implment
 	}
