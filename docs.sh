@@ -4,7 +4,7 @@ set -e
 sourceBranch="master"
 targetBranch="gh-pages"
 
-if [[ "$TRAVIS_PULL_REQUEST" != "false" -o "$TRAVIS_BRANCH" != "$sourceBranch" ]]; then
+if [[ "$TRAVIS_PULL_REQUEST" != "false" && "$TRAVIS_BRANCH" != "$sourceBranch" ]]; then
 	echo "Skipping ddox for branch: $TRAVIS_BRANCH"
 	exit 0
 fi
@@ -14,7 +14,7 @@ sshRepo=${repo/https:\/\/github.com\//git@github.com:}
 sha=$(git rev-parse --verify HEAD)
 # echo $sshRepo
 
-git clone $repo docs
+git clone "$repo" docs
 cd docs/
 git checkout $targetBranch || git checkout --orphan $targetBranch
 cd ..
@@ -45,7 +45,7 @@ encryptedKey=${!encryptedKeyVar}
 encryptedIv=${!encryptedIvVar}
 openssl aes-256-cbc -K "$encryptedKey" -iv "$encryptedIv" -in deploy_key.enc -out deploy_key -d
 chmod 600 deploy_key
-eval $(ssh-agent -s)
+eval "$(ssh-agent -s)"
 ssh-add deploy_key
 
 git push "$sshRepo" "$targetBranch"
