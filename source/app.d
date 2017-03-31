@@ -1,6 +1,9 @@
-import vibe.d;
 import std.process;
+
+import vibe.d;
+
 import blogd.web;
+import blogd.repositories.implementations.accountrepositorymongo;
 
 void main() {
 	auto faviconSettings = new HTTPFileServerSettings;
@@ -10,6 +13,8 @@ void main() {
 		res.headers["Content-Type"] = "image/vnd.microsoft.icon";
 	};
 
+	MongoClient _mongoClient = connectMongoDB(environment.get("MONGO", "mongodb://localhost"));
+	
 	auto filesServerSettings = new HTTPFileServerSettings;
 	filesServerSettings.serverPathPrefix = "/static/";
 	filesServerSettings.options = HTTPFileServerOption.failIfNotFound;
@@ -17,7 +22,11 @@ void main() {
 	auto router = new URLRouter;
 	router.get("/static/*", serveStaticFiles("public/", filesServerSettings));
 	router.get("/favicon.ico", serveStaticFiles("public/", faviconSettings));
-	router.registerWebInterface(new Web);
+	router.registerWebInterface(
+		new Web(
+			new AccountRepositoryMongo(_mongoClient.getDatabase("blogd")["users"])
+		)
+	);
 
 	auto settings = new HTTPServerSettings;
 	settings.sessionStore = new MemorySessionStore;

@@ -1,6 +1,6 @@
 module blogd.displaydata;
 
-import blogd.userdata;
+import blogd.authduser;
 
 /**
 * The struct which holds relevant display data
@@ -15,5 +15,5 @@ struct DisplayData {
 	/// The title of the relvant view
 	public string pageTitle;
 	/// The currently auth'd user data
-	public UserData user;
+	public AuthdUser user;
 }

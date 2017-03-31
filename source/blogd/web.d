@@ -24,15 +24,11 @@ final class Web {
 	import blogd.displaydata;
 	import blogd.models.account;
 	import blogd.repositories.interfaces.iaccountrepository;
-	import blogd.repositories.accountrepositorymongo;
 
 	private {
-		enum auth = before!ensureUserAuthed("_user"); /// Annotation that ensures a user is auth'd
-		SessionVar!(AuthdUser, "user") _authdUser; /// The auth'd user
-		MongoClient _mongoClient; /// Mongo db instance
-		//MongoCollection _mongoUsers; /// Mongo users collection
-		MongoCollection _mongoPosts; /// Mongo posts collection
-		IAccountRepository _accountsRepo; /// User accounts data source
+		enum auth = before!ensureUserAuthed("_user");
+		SessionVar!(AuthdUser, "user") _authdUser;
+		IAccountRepository _accountsRepository;
 	}
 
 	/**
@@ -42,13 +38,8 @@ final class Web {
 	*
 	* Authors: Joshua Hodkinson
 	*/
-	this() {
-		import std.process;
-		_mongoClient = connectMongoDB(environment.get("MONGO", "mongodb://localhost"));
-		_mongoPosts = _mongoClient.getDatabase("blogd")["posts"];
-		
-		// Repositories TODO: Dependcy injection
-		_accountsRepo = new AccountRepositoryMongo(_mongoClient.getDatabase("blogd")["users"]);
+	this(IAccountRepository accountsRepository) {
+		_accountsRepository = accountsRepository;
 	}
 
 	/**
@@ -64,6 +55,17 @@ final class Web {
 		// Display home
 		DisplayData display = {"home", _authdUser};
 		render!("index.dt", display);
+	}
+	
+	unittest {
+		import blogd.repositories.implementations.tests.accountrepositorytest;
+		
+		auto router = new URLRouter;
+		router.registerWebInterface(new Web(new AccountRepositoryTest));
+
+		auto res = createTestHTTPServerResponse(null, new MemorySessionStore);
+		router.handleRequest(createTestHTTPServerRequest(URL("http://localhost/")), res);
+		assert(res.statusCode == 200);
 	}
 
 	/**
@@ -99,7 +101,7 @@ final class Web {
 	@errorDisplay!getLogin
 	void postLogin(ValidEmail email, ValidPassword password) {
 		// Check account
-		auto account = _accountsRepo.get(email); 
+		auto account = _accountsRepository.get(email); 
 		enforce(account != Account.init && isSameHash(password.dup.toPassword, account.password.parseHash), "incorrect email/password");
 
 		// Add logged in user to session
@@ -178,7 +180,7 @@ final class Web {
 		}
 
 		// Check new user doesn't exist
-		auto account = _accountsRepo.get(email); // _mongoUsers.findOne(["email": email.toString]);
+		auto account = _accountsRepository.get(email); // _mongoUsers.findOne(["email": email.toString]);
 		enforce(account == Account.init, "that account already exists");
 
 		// Create new user
@@ -186,7 +188,7 @@ final class Web {
 		import std.random : Mt19937, unpredictableSeed;
 		auto rand = Mt19937(unpredictableSeed);
 		auto hashed = makeHash(password.dup.toPassword, randomSalt(rand));
-		_accountsRepo.put(Account(name, email, password)); //_mongoUsers.insert(["email": email.toString, "password": hashed.toString, "name": name]);
+		_accountsRepository.put(Account(name, email, password)); //_mongoUsers.insert(["email": email.toString, "password": hashed.toString, "name": name]);
 
 		// Log user in
 		AuthdUser user;
@@ -233,12 +235,4 @@ final class Web {
 	mixin PrivateAccessProxy;
 }
 
-unittest {
-	auto router = new URLRouter;
-	router.registerWebInterface(new Web);
 
-	auto res = createTestHTTPServerResponse(null, new MemorySessionStore);
-	router.handleRequest(createTestHTTPServerRequest(URL("http://localhost/")), res);
-	//assert(res);
-	logInfo("Res:" ~ res.toString);
-}
