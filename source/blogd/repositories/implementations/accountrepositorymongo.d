@@ -1,4 +1,4 @@
-module blogd.repositories.accountrepositorymongo;
+module blogd.repositories.implementations.accountrepositorymongo;
 
 import vibe.web.validation : ValidEmail;
 import vibe.db.mongo.mongo : MongoCollection;
