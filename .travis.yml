@@ -11,9 +11,9 @@ before_script:
   
 script:
   # - dub build
-  - dub test -b unittest-cov
+  # - dub test -b unittest-cov
   # need to wrap mongo calls in an interface so that a mock db can be called for unit tests
-  # - dub test --coverage --combined
+  - dub test --coverage --combined
 
 after_success:
   - dub run doveralls
