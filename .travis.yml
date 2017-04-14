@@ -1,5 +1,7 @@
 language: d  
 
+d: dmd-2.071.1
+
 install:
   - npm install -g stylus
 
@@ -8,10 +10,10 @@ before_script:
   - dub fetch ddox
   
 script:
-  - dub build
+  # - dub build
+  - dub test -b unittest-cov
   # need to wrap mongo calls in an interface so that a mock db can be called for unit tests
   # - dub test --coverage --combined
-  # - dub test -b unittest-cov
 
 after_success:
   - dub run doveralls
