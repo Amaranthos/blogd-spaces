@@ -56,10 +56,10 @@ final class Web {
 		DisplayData display = {"home", _authdUser};
 		render!("index.dt", display);
 	}
-	
+
 	unittest {
 		import blogd.repositories.implementations.tests.accountrepositorytest;
-		
+
 		auto router = new URLRouter;
 		router.registerWebInterface(new Web(new AccountRepositoryTest));
 
@@ -101,7 +101,7 @@ final class Web {
 	@errorDisplay!getLogin
 	void postLogin(ValidEmail email, ValidPassword password) {
 		// Check account
-		auto account = _accountsRepository.get(email); 
+		auto account = _accountsRepository.get(email);
 		enforce(account != Account.init && isSameHash(password.dup.toPassword, account.password.parseHash), "incorrect email/password");
 
 		// Add logged in user to session
