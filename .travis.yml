@@ -1,6 +1,4 @@
-language: d  
-
-d: dmd-2.071.1
+language: d
 
 install:
   - npm install -g stylus
@@ -8,7 +6,7 @@ install:
 before_script:
   - dub fetch doveralls
   - dub fetch ddox
-  
+
 script:
   # - dub build
   # - dub test -b unittest-cov
