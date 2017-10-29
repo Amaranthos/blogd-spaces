@@ -1,0 +1,10 @@
+nav.mdl-navigation
+	a.mdl-navigation__link(href="/") home
+	a.mdl-navigation__link(href="/posts/read") read
+	-if (req.session && display.user.loggedIn)
+		a.mdl-navigation__link(href="/posts/write") write
+		a.mdl-navigation__link(href="/user/details") account
+		a.mdl-navigation__link(href="/logout") logout
+	-else
+		a.mdl-navigation__link(href="/login") login
+		a.mdl-navigation__link(href="/user/create") create account

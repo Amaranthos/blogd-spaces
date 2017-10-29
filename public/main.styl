@@ -1,0 +1,55 @@
+// Other colours
+$white = #FFFFFF
+$black = #000000
+
+// Error colours
+$error_red = #D50000
+
+// Vendor mixins
+vendors = webkit moz o ms
+
+appearance()
+	for vendor in vendors
+		-{vendor}-appearance: arguments
+	appearance: arguments
+
+border-radius()
+	for vendor in vendors
+		-{vendor}-border-radius: arguments
+	border-radius: arguments
+
+transition()
+	for vendor in vendors
+		-{vendor}-transition: arguments
+	transition: arguments
+
+// Body styles
+body
+	font-family: Noto Sans
+	margin: 0
+	font-size: 1em
+	
+// Main styles
+main
+	
+	&.mdl-layout__content
+		.mdl-grid
+			padding-top: 40px;
+
+// Form styles
+form
+	// justify-content: center
+	
+	&.mdl-cell
+		margin: 0 auto
+
+	.mdl-card__supporting-text
+		
+		.mdl-textfield
+			display: block
+			width: 100%
+
+// Misc
+p.form__error
+	color: $error_red
+	font-size: 16px

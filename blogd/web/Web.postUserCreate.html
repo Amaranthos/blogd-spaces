@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<title>Function Web.postUserCreate</title>
+		<link rel="stylesheet" type="text/css" href="../../styles/ddox.css"/>
+		<link rel="stylesheet" href="../../prettify/prettify.css" type="text/css"/>
+		<script type="text/javascript" src="../../scripts/jquery.js">/**/</script><script type="text/javascript" src="../../scripts/ddox.js">/**/</script>
+	</head>
+	<body onload="setupDdox();">
+		<nav id="main-nav">
+			<noscript>
+				<p style="color: red">The search functionality needs JavaScript enabled</p>
+			</noscript>
+			<div id="symbolSearchPane" style="display: none">
+				<form action="#" method="GET">
+					<input id="symbolSearch" type="text" name="q" placeholder="Search for symbols" autocomplete="off" onchange="performSymbolSearch(40);" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"/>
+				</form>
+				<ul id="symbolSearchResults" class="symbolList" style="display: none"></ul><script type="application/javascript" src="../../symbols.js"></script><script type="application/javascript">var symbolSearchRootDir = "../../";
+$('#symbolSearchPane').show();</script>
+			</div>
+			<ul class="tree-view">
+				<li class="tree-view ">
+					<div class="package ">blogd
+					</div>
+			<ul class="tree-view">
+				<li class="tree-view collapsed">
+					<div class="package ">models
+					</div>
+			<ul class="tree-view">
+				<li>
+					<div class="module ">
+						<a href="../../blogd/models/account.html">account</a>
+					</div>
+				</li>
+			</ul>
+				</li>
+				<li class="tree-view collapsed">
+					<div class="package ">repositories
+					</div>
+			<ul class="tree-view">
+				<li class="tree-view collapsed">
+					<div class="package ">implementations
+					</div>
+			<ul class="tree-view">
+				<li class="tree-view collapsed">
+					<div class="package ">tests
+					</div>
+			<ul class="tree-view">
+				<li>
+					<div class="module ">
+						<a href="../../blogd/repositories/implementations/tests/accountrepositorytest.html">accountrepositorytest</a>
+					</div>
+				</li>
+			</ul>
+				</li>
+				<li>
+					<div class="module ">
+						<a href="../../blogd/repositories/implementations/accountrepositorymongo.html">accountrepositorymongo</a>
+					</div>
+				</li>
+			</ul>
+				</li>
+				<li class="tree-view collapsed">
+					<div class="package ">interfaces
+					</div>
+			<ul class="tree-view">
+				<li>
+					<div class="module ">
+						<a href="../../blogd/repositories/interfaces/iaccountrepository.html">iaccountrepository</a>
+					</div>
+				</li>
+				<li>
+					<div class="module ">
+						<a href="../../blogd/repositories/interfaces/irepository.html">irepository</a>
+					</div>
+				</li>
+			</ul>
+				</li>
+			</ul>
+				</li>
+				<li>
+					<div class="module ">
+						<a href="../../blogd/authduser.html">authduser</a>
+					</div>
+				</li>
+				<li>
+					<div class="module ">
+						<a href="../../blogd/displaydata.html">displaydata</a>
+					</div>
+				</li>
+				<li>
+					<div class="module selected">
+						<a href="../../blogd/web.html">web</a>
+					</div>
+				</li>
+			</ul>
+				</li>
+			</ul>
+		</nav>
+		<div id="main-contents">
+			<h1>Function Web.postUserCreate</h1><p>POST "/user/create", validates new user details and inserts in db, redirects to GET "/" on success or to GET "/user/create" on failure
+</p>
+			<div class="prototype">
+				<code class="lang-d">
+					<div class="single-prototype">
+			<span class="typ">void</span> <span class="pln">postUserCreate</span>
+			<span class="pun">(</span>
+			<br/>
+			&nbsp;&nbsp;<span class="pln">vibe<wbr/></span><span class="pun">.</span><span class="pln">web<wbr/></span><span class="pun">.</span><span class="pln">validation<wbr/></span><span class="pun">.</span><span class="typ">ValidEmail</span> <span class="pln">email</span><span class="pun">,</span>
+			<br/>
+			&nbsp;&nbsp;<span class="pln">vibe<wbr/></span><span class="pun">.</span><span class="pln">web<wbr/></span><span class="pun">.</span><span class="pln">validation<wbr/></span><span class="pun">.</span><span class="typ">ValidPassword</span> <span class="pln">password</span><span class="pun">,</span>
+			<br/>
+			&nbsp;&nbsp;<span class="typ">string</span> <span class="pln">name</span>
+			<br/>
+			<span class="pun">)</span><span class="pun">;</span>
+					</div>
+				</code>
+			</div>
+			<section><p>This is a child to the user route "/user/" and handles the submitted create user form.
+ The submitted data is checked to be valid, and checked to not already exist.
+ If the user is auth'd they are redirected to GET "/".
+ Else if the user does exist, or the submitted data isn't valid the user is redirected to GET "/user/create" with an error message.
+ Else new user password is hashed, user details are inserted into the db, the user is auth'd and redirected to GET "/".
+</p>
+</section>
+
+			<section><h2>TODO</h2>
+<p>send confirmation email to user and login via link
+</p>
+</section>
+<section><h2>Parameters</h2>
+<table><col class="caption"><tr><th>Name</th><th>Description</th></tr>
+<tr><td id="email">email</td><td> field passed in via form</td></tr>
+<tr><td id="password">password</td><td> field passed in via form</td></tr>
+<tr><td id="name">name</td><td> field passed in via form</td></tr>
+</table>
+</section>
+
+			<footer>
+				<table class="license-info">
+					<tr>
+						<th>Authors</th>
+						<td>
+							
+						</td>
+					</tr>
+					<tr>
+						<th>Copyright</th>
+						<td>
+							
+						</td>
+					</tr>
+					<tr>
+						<th>License</th>
+						<td>
+							
+						</td>
+					</tr>
+				</table>
+				<p class="faint">Generated using the DDOX documentation generator</p>
+			</footer>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,22 @@
+language: d
+
+install:
+  - npm install -g stylus
+
+before_script:
+  - dub fetch doveralls
+  - dub fetch ddox
+
+script:
+  # - dub build
+  # - dub test -b unittest-cov
+  # need to wrap mongo calls in an interface so that a mock db can be called for unit tests
+  - dub test --coverage --combined
+
+after_success:
+  - dub run doveralls
+  - bash ./docs.sh
+
+env:
+  global:
+    ENCRYPTION_LABEL: "8078d6ff4ba8"
